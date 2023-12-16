@@ -21,6 +21,45 @@ chamber = 0
 i = 0
 distance = 15
 immobile = 0
+
+def print_info():
+    global chamber, chambered
+    print("Distance: " + str(distance))
+    print("Zombie health: " + str(harmed))
+    if gunammo < 1:
+        chamber = 0
+    if chamber == 0:
+        chambered = 'not in chamber'
+    else:
+        chambered = 'in chamber'
+    if jam == 1:
+        print("Your gun is jammed")
+    print("Shots in magazine: " + str(currentmag[i]))
+    print("Your shooting skill is " + str(skill))
+
+
+def check_zombie(distance):
+    if immobile < 1:
+        if lleg > 0:
+            if lleg < 5:
+                distance -= 0.25
+            distance -= 0.5
+        if rleg > 0:
+            if rleg < 5:
+                distance -= 0.25
+            distance -= 0.5
+        if lleg and rleg < 1:
+            if rarm > 0:
+                if rarm < 5:
+                    distance -= 0.15
+                distance -= 0.25
+            if larm > 0:
+                if larm < 5:
+                    distance -= 0.15
+                distance -= 0.25
+    return distance
+
+
 while True:
     harmed[0] = lleg
     harmed[1] = rleg
@@ -43,18 +82,9 @@ while True:
     if distance <= 0:
         print("Why didn't you run? The zombie reached and killed you.")
         break
-    print("Distance: "+str(distance))
-    print("Zombie health: "+str(harmed))
-    if gunammo < 1:
-        chamber = 0
-    if chamber == 0:
-        chambered = 'not in chamber'
-    else:
-        chambered = 'in chamber'
-    if jam == 1:
-        print("Your gun is jammed")
-    print("Shots in magazine: "+str(currentmag[i]))
-    print("Your shooting skill is " + str(skill))
+
+    print_info()
+
     print("Shoot/Evade/Reload/Rack/Chamber")
     choice = input()
     if choice == 'Evade':
@@ -211,21 +241,5 @@ while True:
                         jamming = random.randint(0, 100)
                 else:
                     print("I can't shoot, my gun is jammed.")
-    if immobile < 1:
-        if lleg > 0:
-            if lleg < 5:
-                distance -= 0.25
-            distance -= 0.5
-        if rleg > 0:
-            if rleg < 5:
-                distance -= 0.25
-            distance -= 0.5
-        if lleg and rleg < 1:
-            if rarm > 0:
-                if rarm < 5:
-                    distance -= 0.15
-                distance -= 0.25
-            if larm > 0:
-                if larm < 5:
-                    distance -= 0.15
-                distance -= 0.25
+
+    distance = check_zombie(distance)

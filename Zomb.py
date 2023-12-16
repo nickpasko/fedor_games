@@ -40,11 +40,11 @@ while True:
     if harmed[2] < 1:
         print("Zombie collapsed, not able to move anything, it is dead.")
         break
-    if distance == 0:
+    if distance <= 0:
         print("Why didn't you run? The zombie reached and killed you.")
         break
-    print("Distance: "+distance)
-    print("Zombie health: "+harmed)
+    print("Distance: "+str(distance))
+    print("Zombie health: "+str(harmed))
     if gunammo < 1:
         chamber = 0
     if chamber == 0:
@@ -53,7 +53,7 @@ while True:
         chambered = 'in chamber'
     if jam == 1:
         print("Your gun is jammed")
-    print("Shots in magazine"+currentmag[i])
+    print("Shots in magazine: "+str(currentmag[i]))
     print("Your shooting skill is " + str(skill))
     print("Shoot/Evade/Reload/Rack/Chamber")
     choice = input()
